@@ -5,6 +5,7 @@ import "./App.css";
 import Form from './components/Form'
 import Dashboard from './components/Dashboard'
 import Finanzas from './components/Finanzas'
+import { fetchUsuarios } from "./reducers/usuarios";
 
 function Titulo() {
   return <h2 className="title">Finanzly</h2>;
@@ -12,12 +13,13 @@ function Titulo() {
 
 
 
-function App({ finanzas, agregarFinanza, eliminarFinanza }) {
+function App({ finanzas, agregarFinanza, eliminarFinanza, fetchUsuarios }) {
   const total = finanzas.reduce((acc, el) => acc + el.cant, 0);
   return (
     <div className="section">
       <div className="container">
         <Titulo />
+        <button onClick={fetchUsuarios}>Fetch Usuarios</button>
         <Form agregarFinanza={agregarFinanza} />
         <Dashboard valor={total} />
         <Finanzas finanzas={finanzas} eliminarFinanza={eliminarFinanza} />
@@ -32,7 +34,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   agregarFinanza: finanza => dispatch(agregar(finanza)),
-  eliminarFinanza: index => dispatch(eliminar(index))
+  eliminarFinanza: index => dispatch(eliminar(index)),
+  fetchUsuarios: () => dispatch(fetchUsuarios())
 });
 
 export default connect(
